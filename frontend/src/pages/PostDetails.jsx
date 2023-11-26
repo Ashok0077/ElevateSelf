@@ -9,6 +9,8 @@ import { URL,IF } from "../url"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../context/UserContext"
 import Loader from "../components/Loader"
+import avatarImage from '../assets/6596121.png'
+import { Link } from 'react-router-dom';
 
 
 const PostDetails = () => {
@@ -87,7 +89,22 @@ const PostDetails = () => {
          console.log(err)
     }
 
+
+    
   }
+
+  const handleUserProfileClick = async () => {
+    try {
+      // Increment the view count in the backend
+      await axios.put(`${URL}/api/users/${post?.userId}/increment-view`, null, { withCredentials: true });
+  
+      // Navigate to the user's profile
+      navigate(`/UserProfile/${post?.userId}`);
+    } catch (err) {
+      console.error('Error updating view count or navigating to user profile:', err);
+    }
+  };
+
 
 
   
@@ -103,7 +120,18 @@ const PostDetails = () => {
          </div>}
         </div>
         <div className="flex items-center justify-between mt-2 md:mt-4">
-        <p>@{post.username}</p>
+          
+       
+
+        <div className="flex items-center cursor-pointer" onClick={handleUserProfileClick}>
+              <div className="w-10 h-10 rounded-full overflow-hidden mr-2">
+                {/* Replace 'avatar-url.jpg' with the actual URL of the user's avatar */}
+                <img className="w-full h-full object-cover" src={avatarImage} alt="User Avatar" />
+              </div>
+              <p>@{post.username}</p>
+        </div>
+        
+
        <div className="flex space-x-2">
        <p>{new Date(post.updatedAt).toString().slice(0,15)}</p>
        <p>{new Date(post.updatedAt).toString().slice(16,24)}</p>

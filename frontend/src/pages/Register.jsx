@@ -11,6 +11,7 @@ const Register = () => {
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
   const [error,setError]=useState(false)
+  const [view,setView]=useState(0)
   const navigate=useNavigate()
 
   const handleRegister=async ()=>{
@@ -20,6 +21,7 @@ const Register = () => {
       setUsername(res.data.username)
       setEmail(res.data.email)
       setPassword(res.data.password)
+      setView(0);
       setError(false)
       navigate("/login")
       

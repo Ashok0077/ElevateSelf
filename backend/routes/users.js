@@ -51,5 +51,22 @@ router.get("/:id",async (req,res)=>{
     }
 })
 
+router.put("/:userId/increment-view", async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      // Assuming you have a User model
+      const user = await User.findById(userId);
+  
+      // Increment the view count
+      user.view = (user.view || 0) + 1;
+      await user.save();
+  
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error incrementing view count:', error);
+      res.status(500).json({ error: 'error inside inside increment api' });
+    }
+  });
+
 
 module.exports=router
