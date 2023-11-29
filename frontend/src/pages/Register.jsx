@@ -37,10 +37,12 @@ const Register = () => {
 
   return (
     <>
+    <section className="sticky top-0 left-0 right-0 z-50 bg-white">
       <div className="flex items-center justify-between px-6 md:px-[200px] py-4">
     <h1 className="text-[#183b56] text-lg md:text-3xl font-extrabold"><Link to="/">ElevateSelf</Link></h1>
-    <h3 className="text-[#363b56]"><Link to="/login">Login</Link></h3>
+    <h3 className="mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"><Link to="/login">Login</Link></h3>
     </div>
+    </section>
     <div className="w-full flex justify-center items-center h-[80vh] ">
        <div className="flex flex-col justify-center items-center space-y-4 w-[80%] md:w-[25%]">
          <h1 className="text-xl font-bold text-left">Create an account</h1>
