@@ -46,12 +46,10 @@ const UserProfile = () => {
             <ProfilePosts key={p._id} p={p} />
           ))}
         </div>
-        <div className="md:sticky md:top-12 flex items-start md:w-[30%] w-full md:items-end ">
+        <div className="md:sticky md:top-12  flex justify-start md:justify-end items-start md:w-[30%] w-full md:items-end">
           <div className="flex flex-col space-y-4 items-start">
             <h1 className="text-xl font-bold mb-4">Profile</h1>
-            <p className="px-4 py-2 text-gray-500">
-              Username: {username}
-            </p>
+            <p className="px-4 py-2 text-gray-500">Username: {username}</p>
             <p className="px-4 py-2 text-gray-500">Email: {email}</p>
           </div>
         </div>
