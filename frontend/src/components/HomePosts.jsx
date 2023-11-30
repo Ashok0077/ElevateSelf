@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { URL,IF } from '../url';
 import sampleImage from '../assets/sample.jpg';
 import axios from "axios"
-import avatar from '../assets/6596121.png';
+import avatar from "../assets/user.png"
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 
