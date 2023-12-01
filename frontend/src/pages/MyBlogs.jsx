@@ -7,6 +7,7 @@ import axios from "axios"
 import { URL } from "../url"
 import HomePosts from "../components/HomePosts"
 import Loader from "../components/Loader"
+import ArticleCardSkeleton from "../components/ArticleCardSkeleton"
 
 
 const MyBlogs = () => {
@@ -49,7 +50,12 @@ const MyBlogs = () => {
         <Navbar/>
         <section className="flex flex-col container mx-auto px-5 py-10">
         <div className="flex flex-wrap md:gap-x-5 gap-y-5 pb-10">
-        {loader?<div className="h-[40vh] flex justify-center items-center"><Loader/></div>:!noResults?
+        {loader?[...Array(3)].map((item, index) => (
+              <ArticleCardSkeleton
+                key={index}
+                className="w-full md:w-[calc(50%-20px)] lg:w-[calc(33.33%-21px)]"
+              />
+            )):!noResults?
         posts.map((post)=>(
           <>
           
