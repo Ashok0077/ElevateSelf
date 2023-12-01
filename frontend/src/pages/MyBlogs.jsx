@@ -47,17 +47,19 @@ const MyBlogs = () => {
   return (
     <div>
         <Navbar/>
-        <div className="px-8 md:px-[200px] min-h-[80vh]">
+        <section className="flex flex-col container mx-auto px-5 py-10">
+        <div className="flex flex-wrap md:gap-x-5 gap-y-5 pb-10">
         {loader?<div className="h-[40vh] flex justify-center items-center"><Loader/></div>:!noResults?
         posts.map((post)=>(
           <>
-          <Link to={user?`/posts/post/${post._id}`:"/login"}>
-          <HomePosts key={post._id} post={post}/>
-          </Link>
+          
+          <HomePosts  post={post} className="w-full md:w-[calc(50%-20px)] lg:w-[calc(33.33%-21px)]"/>
+          
           </>
           
         )):<h3 className="text-center font-bold mt-16">No posts available</h3>}
         </div>
+        </section>
         <Footer/>
     </div>
   )
