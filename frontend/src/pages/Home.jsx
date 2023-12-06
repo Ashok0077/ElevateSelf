@@ -55,7 +55,7 @@ const Home = () => {
               />
             ))
           ) : noResults ? (
-            <h3 className="text-center font-bold mt-16">No posts available</h3>
+            <ErrorMessage message={"No Posts Available"}/>
           ) : (
             posts.map((post) => (
                 <HomePosts
