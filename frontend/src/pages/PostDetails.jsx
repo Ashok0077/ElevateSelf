@@ -187,7 +187,7 @@ const PostDetails = () => {
           </div>
          </div>
          <div className="flex flex-col mt-4">
-         <h3 className="text-[#0e2436] mt-6 mb-4 font-semibold">Comments:</h3>
+         <h3 className="text-[#0e2436] mt-6 mb-4 font-semibold">Queries:</h3>
          {comments?.map((c)=>(
           <Comment key={c._id} c={c} post={post} />
          ))}
@@ -196,7 +196,7 @@ const PostDetails = () => {
          {/* write a comment */}
          <div className="w-full flex flex-col mt-4 md:flex-row">
           <input onChange={(e)=>setComment(e.target.value)} type="text" placeholder="Write a comment" className="md:w-[80%] outline-none py-2 px-4 mt-4 md:mt-0"/>
-          <button onClick={postComment} className="bg-[#0e2436] text-sm text-white px-2 py-2 md:w-[20%] mt-4 md:mt-0">Add Comment</button>
+          <button onClick={postComment} className="bg-[#0e2436] text-sm text-white px-2 py-2 md:w-[20%] mt-4 md:mt-0">Add Query</button>
          </div>
          
         
