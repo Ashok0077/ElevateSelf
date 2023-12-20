@@ -13,6 +13,7 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
+  const [view, setView ] = useState("");
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [updated, setUpdated] = useState(false);
@@ -24,6 +25,7 @@ const Profile = () => {
       setUsername(res.data.username);
       setEmail(res.data.email);
       setPassword(res.data.password);
+      setView(res.data.view);
     } catch (err) {
       console.log(err);
     }
@@ -103,6 +105,7 @@ const Profile = () => {
               placeholder="Your email"
               type="email"
             />
+            <p className="outline-none px-4 py-2 text-gray-500 bg-gray-100 rounded-md hover:shadow-md transition-all duration-300 font-semibold">Views : {view}</p>
             {/* <input
               onChange={(e) => setPassword(e.target.value)}
               value={password}

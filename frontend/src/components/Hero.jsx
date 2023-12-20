@@ -12,11 +12,10 @@ const Hero = () => {
     <section className="container mx-auto flex flex-col px-5 py-5 lg:flex-row">
       <div className="mt-10 lg:w-1/2">
         <h1 className="font-roboto text-3xl text-center font-bold text-[#183b56] md:text-5xl lg:text-4xl xl:text-5xl lg:text-left lg:max-w-[540px]">
-          Read the most interesting articles
+        Want to develop? Let ElevateSelf assist you.
         </h1>
         <p className="text-[#5a7188] mt-4 text-center md:text-xl lg:text-base xl:text-xl lg:text-left">
-          Stay Informed and Entertained: Dive into the Most Captivating Articles
-          of the Moment
+        Read other people's success stories, follow their guidance, learn from them, implement in life, and witness the magic.
         </p>
         <div className="flex flex-col gap-y-2.5 mt-10 lg:mt-6 xl:mt-10 relative">
           <div className="relative">
@@ -38,13 +37,16 @@ const Hero = () => {
           </span>
           <ul className="flex flex-wrap gap-x-2.5 gap-y-2.5 mt-3 lg:text-sm xl:text-base">
             <li className="rounded-lg bg-[#7999cd] bg-opacity-10 px-3 py-1.5 text-[#1569db] font-semibold">
-              Design
+              interviews
             </li>
             <li className="rounded-lg bg-[#7999cd] bg-opacity-10 px-3 py-1.5 text-[#1569db] font-semibold">
-              User Experience
+              UPSE
             </li>
             <li className="rounded-lg bg-[#7999cd] bg-opacity-10 px-3 py-1.5 text-[#1569db] font-semibold">
-              User Interfaces
+              Placement
+            </li>
+            <li className="rounded-lg bg-[#7999cd] bg-opacity-10 px-3 py-1.5 text-[#1569db] font-semibold">
+              Fitness
             </li>
           </ul>
         </div>

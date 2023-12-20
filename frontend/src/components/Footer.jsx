@@ -46,16 +46,16 @@ const Footer = () => {
               <a href="/">Documentation</a>
             </li>
             <li>
-              <a href="/">Design</a>
+              <a href="/">Guidence</a>
             </li>
             <li>
-              <a href="/">Themes</a>
+              <a href="/">One to one support</a>
             </li>
             <li>
               <a href="/">Illustrations</a>
             </li>
             <li>
-              <a href="/">UI Kit</a>
+              <a href="/">Campaign</a>
             </li>
           </ul>
         </div>
@@ -98,7 +98,7 @@ const Footer = () => {
           /> */}
           <h1 className="text-4xl text-white font-bold">ElevateSelf</h1>
           <p className="text-sm text-[#5a7184] text-center mt-4 md:text-left md:text-base lg:text-sm">
-            Build a modern and creative website with crealand
+          Nurturing Personal Growth and Motivation
           </p>
           <ul className="flex justify-center items-center mt-5 space-x-4 text-gray-300 md:justify-start">
             <li>
