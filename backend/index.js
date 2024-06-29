@@ -12,6 +12,8 @@ const postRoute=require('./routes/posts')
 const commentRoute=require('./routes/comments')
 
 
+//app.use(cors({origin:"http://localhost:5173",credentials:true}))
+app.use(cors({origin:"https://elevate-self-api-1whq.vercel.app",method: ["POST","GET"], credentials:true}));
 //database
 const connectDB=async()=>{
     try{
@@ -31,7 +33,7 @@ app.use(express.static('public'));
 dotenv.config()
 app.use(express.json())
 app.use("/images",express.static(path.join(__dirname,"/images")))
-app.use(cors({origin:"http://localhost:5173",credentials:true}))
+
 app.use(cookieParser())
 app.use("/api/auth",authRoute)
 app.use("/api/users",userRoute)
