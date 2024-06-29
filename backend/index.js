@@ -17,7 +17,7 @@ app.use(cors({origin:"https://elevate-self-frontend.vercel.app",method: ["POST",
 //database
 const connectDB=async()=>{
     try{
-        await mongoose.connect(process.env.MONGO_URL)
+        await mongoose.connect("mongodb+srv://Ashok:Ashok@cluster0.1nejjcf.mongodb.net/ElevateSelf?retryWrites=true&w=majority")
         console.log("database is connected successfully!")
 
     }
@@ -30,6 +30,11 @@ const connectDB=async()=>{
 app.get("/",(req,res)=>{
     res.json("hello");
 })
+
+app.get('/health', (req, res) => {
+    const connectionState = mongoose.connection.readyState;
+    res.json({ connected: connectionState === 1 });
+});
 
 //middlewares
 app.use(express.static('public'));
