@@ -13,7 +13,7 @@ const commentRoute=require('./routes/comments')
 
 
 //app.use(cors({origin:"http://localhost:5173",credentials:true}))
-app.use(cors({origin:"http://localhost:5173",method: ["POST","GET"], credentials:true}));
+app.use(cors({origin:"https://elevate-self-frontend.vercel.app",method: ["POST","GET"], credentials:true}));
 //database
 const connectDB=async()=>{
     try{
