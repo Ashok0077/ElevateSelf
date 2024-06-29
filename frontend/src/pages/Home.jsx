@@ -8,7 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 import Loader from '../components/Loader';
 import { UserContext } from "../context/UserContext";
 import Subscribe from "../components/Subscribe";
-import Hero from "../components/hero";
+import Hero from "../components/Hero.jsx";
 import { FaArrowRight } from "react-icons/fa";
 import ErrorMessage from "../components/ErrorMessage";
 import ArticleCardSkeleton from "../components/ArticleCardSkeleton";
