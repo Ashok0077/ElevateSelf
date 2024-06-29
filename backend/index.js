@@ -13,7 +13,7 @@ const commentRoute=require('./routes/comments')
 
 
 //app.use(cors({origin:"http://localhost:5173",credentials:true}))
-app.use(cors({origin:"https://elevate-self-api-1whq.vercel.app",method: ["POST","GET"], credentials:true}));
+app.use(cors({origin:"https://elevate-self-api-woad.vercel.app/",method: ["POST","GET"], credentials:true}));
 //database
 const connectDB=async()=>{
     try{
@@ -26,7 +26,10 @@ const connectDB=async()=>{
     }
 }
 
-
+//default route at server
+app.get("/",(req,res)=>{
+    res.json("hello");
+})
 
 //middlewares
 app.use(express.static('public'));
