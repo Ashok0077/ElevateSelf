@@ -12,7 +12,7 @@ const postRoute=require('./routes/posts')
 const commentRoute=require('./routes/comments')
 
 
-app.use(cors({origin:"https://elevate-self.vercel.app",credentials:true}))
+app.use(cors({origin:"https://elevate-self.vercel.app",credentials:true}));
 //app.use(cors({origin:"https://elevate-self-frontend.vercel.app",method: ["POST","GET"], credentials:true}));
 
 // const corsConfig = {
@@ -52,8 +52,8 @@ app.get('/health', (req, res) => {
 app.use(express.static('public'));
 dotenv.config()
 app.use(express.json())
+app.use(cors(corsOptions))
 app.use("/images",express.static(path.join(__dirname,"/images")))
-
 app.use(cookieParser())
 app.use("/api/auth",authRoute)
 app.use("/api/users",userRoute)
