@@ -7,7 +7,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         //target: "http://localhost:3000",
-         target: "https://book-store-api-hazel.vercel.app",
+         target: "https://elevate-self-backend.vercel.app",
         secure: false,
       },
     },
