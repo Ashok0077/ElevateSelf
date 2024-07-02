@@ -44,6 +44,7 @@ const connectDB=async(req,res)=>{
 //default route at server
 app.get("/",(req,res)=>{
     res.json("hello");
+    connectDB();
 })
 
 app.get('/health', (req, res) => {
