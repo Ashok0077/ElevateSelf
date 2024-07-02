@@ -28,7 +28,7 @@ app.use(cors({origin:"https://elevate-self.vercel.app",credentials:true}))
 //database
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb+srv://ashok:1234@cluster0.mnfqtee.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0");
+        await mongoose.connect("mongodb+srv://Ashok:1234@cluster0.1nejjcf.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0");
         console.log("Database is connected successfully!");
         return { message: "Connection successful" };
     } catch (err) {
