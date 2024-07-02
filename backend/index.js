@@ -26,26 +26,22 @@ app.use(cors({origin:"http://localhost:5173",credentials:true}))
 
 
 //database
-const connectDB=async(req,res)=>{
-    try{
-        await mongoose.connect("mongodb+srv://ashok:1234@cluster0.mnfqtee.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0")
-        console.log("database is connected successfully!")
-        res.status(200).json({ message: "Connection successful" });
-
+const connectDB = async () => {
+    try {
+        await mongoose.connect("mongodb+srv://ashok:1234@cluster0.mnfqtee.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0");
+        console.log("Database is connected successfully!");
+        return { message: "Connection successful" };
+    } catch (err) {
+        console.log(err);
+        return { message: "Connection failed" };
     }
-    catch(err){
-        console.log(err)
-        res.json("not connected");
-        res.status(200).json({ message: "Connection successful" });
-
-    }
-}
+};
 
 //default route at server
-app.get("/",(req,res)=>{
-    res.json("hello");
-    connectDB();
-})
+app.get("/", async (req, res) => {
+    const status = await connectDB();
+    res.status(status.message === "Connection successful" ? 200 : 500).json(status);
+});
 
 app.get('/health', (req, res) => {
     const connectionState = mongoose.connection.readyState;
