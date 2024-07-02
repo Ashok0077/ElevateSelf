@@ -26,14 +26,18 @@ app.use(cors({origin:"http://localhost:5173",credentials:true}))
 
 
 //database
-const connectDB=async()=>{
+const connectDB=async(req,res)=>{
     try{
         await mongoose.connect("mongodb+srv://ashok:1234@cluster0.mnfqtee.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0")
         console.log("database is connected successfully!")
+        res.status(200).json({ message: "Connection successful" });
 
     }
     catch(err){
         console.log(err)
+        res.json("not connected");
+        res.status(200).json({ message: "Connection successful" });
+
     }
 }
 
