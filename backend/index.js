@@ -12,23 +12,23 @@ const postRoute=require('./routes/posts')
 const commentRoute=require('./routes/comments')
 
 
-//app.use(cors({origin:"http://localhost:5173",credentials:true}))
+app.use(cors({origin:"http://localhost:5173",credentials:true}))
 //app.use(cors({origin:"https://elevate-self-frontend.vercel.app",method: ["POST","GET"], credentials:true}));
 
-const corsConfig = {
-    origin: "https://elevate-self-frontend.vercel.app",
-    credentials: true,
-    methods: ["GET", "POST"]
-};
+// const corsConfig = {
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//     methods: ["GET", "POST"]
+// };
 
-app.use(cors(corsConfig));
-app.use(cors());
+// app.use(cors(corsConfig));
+// app.use(cors());
 
 
 //database
 const connectDB=async()=>{
     try{
-        await mongoose.connect("mongodb+srv://Ashok:Ashok@cluster0.1nejjcf.mongodb.net/ElevateSelf?retryWrites=true&w=majority")
+        await mongoose.connect("mongodb+srv://ashok:1234@cluster0.mnfqtee.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0")
         console.log("database is connected successfully!")
 
     }
