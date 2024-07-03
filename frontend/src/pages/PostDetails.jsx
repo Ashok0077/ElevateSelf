@@ -29,7 +29,8 @@ const PostDetails = () => {
   const [comment,setComment]=useState("")
   const [loader,setLoader]=useState(false)
   const navigate=useNavigate()
-  
+  const token = localStorage.getItem("token");
+
   const fetchPosts = async () => {
     setLoader(true);
     try {
@@ -65,7 +66,12 @@ const PostDetails = () => {
   const handleDeletePost=async ()=>{
 
     try{
-      const res=await axios.delete(URL+"/api/posts/"+postId,{withCredentials:true})
+      const res=await axios.delete(URL+"/api/posts/"+postId,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      })
       console.log(res.data)
       navigate("/")
 
@@ -105,7 +111,12 @@ const PostDetails = () => {
     try{
       const res=await axios.post(URL+"/api/comments/create",
       {comment:comment,author:user.username,postId:postId,userId:user._id},
-      {withCredentials:true})
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      });
       
       // fetchPostComments()
       // setComment("")
@@ -120,10 +131,16 @@ const PostDetails = () => {
     
   }
 
+  
   const handleUserProfileClick = async () => {
     try {
       // Increment the view count in the backend
-      await axios.put(`${URL}/api/users/${post?.userId}/increment-view`, null, { withCredentials: true });
+      await axios.put(`${URL}/api/users/${post?.userId}/increment-view`, null, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      });
   
       // Navigate to the user's profile
       navigate(`/UserProfile/${post?.userId}`);

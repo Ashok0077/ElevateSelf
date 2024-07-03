@@ -54,9 +54,14 @@ const EditPost = () => {
       }
     }
 
+    const token = localStorage.getItem("token");
+
     try {
       const res = await axios.put(URL + '/api/posts/' + postId, post, {
-        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
       })
       navigate('/posts/post/' + res.data._id)
     } catch (err) {
