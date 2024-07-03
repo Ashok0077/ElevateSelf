@@ -61,15 +61,23 @@ router.get("/logout",async (req,res)=>{
 })
 
 //REFETCH USER
-router.get("/refetch", (req,res)=>{
-    const token=req.cookies.token
-    jwt.verify(token,process.env.SECRET,{},async (err,data)=>{
-        if(err){
-            return res.status(404).json(err)
-        }
-        res.status(200).json(data)
-    })
-})
+router.get("/refetch", (req, res) => {
+    const authHeader = req.headers.authorization;
+  
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json("Unauthorized: Missing or invalid token");
+    }
+  
+    const token = authHeader.split(' ')[1];
+  
+    jwt.verify(token, process.env.SECRET, {}, async (err, data) => {
+      if (err) {
+        return res.status(403).json("Token is not valid!");
+      }
+      res.status(200).json(data);
+    });
+  });
+  
 
 
 
