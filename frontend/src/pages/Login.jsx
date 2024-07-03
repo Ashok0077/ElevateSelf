@@ -17,6 +17,8 @@ const Login = () => {
     try{
       const res=await axios.post(URL+"/api/auth/login",{email,password},{withCredentials:true})
       // console.log(res.data)
+      const { token, info } = res.data;
+      localStorage.setItem('token', token); // we are storing token in local storage from the response
       setUser(res.data)
       navigate("/")
 
