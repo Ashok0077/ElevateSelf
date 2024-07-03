@@ -5,7 +5,8 @@ const verifyToken = (req, res, next) => {
 
   
   if (!token) {
-    return res.status(401).json("You are not authenticated!");
+    return res.status(401).json({message : "You are not authenticated! ",
+      token: token});
   }
 
   jwt.verify(token, process.env.SECRET, async (err, data) => {
