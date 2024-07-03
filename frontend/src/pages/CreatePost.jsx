@@ -72,6 +72,8 @@ const CreatePost = () => {
     }
 
     const token = localStorage.getItem("token");
+    console.log("token value");
+    console.log(token);
 
     try {
       const res = await axios.post(URL + "/api/posts/create", post, {
