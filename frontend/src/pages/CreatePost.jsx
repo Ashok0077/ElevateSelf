@@ -7,6 +7,7 @@ import { UserContext } from '../context/UserContext'
 import { URL } from '../url'
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -71,7 +72,7 @@ const CreatePost = () => {
       }
     }
 
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
     console.log("token value");
     console.log(token);
 
