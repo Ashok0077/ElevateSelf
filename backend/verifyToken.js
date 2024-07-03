@@ -5,8 +5,7 @@ const verifyToken = (req, res, next) => {
 
   
   if (!token) {
-    return res.status(401).json({message : "You are not authenticated! ",
-      token: token});
+    return res.status(401).json({message : "Can't able to get token, check if you are login or not ", token : token});
   }
 
   jwt.verify(token, process.env.SECRET, async (err, data) => {
