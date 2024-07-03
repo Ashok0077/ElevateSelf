@@ -17,7 +17,7 @@ router.post("/create",verifyToken,async (req,res)=>{
     }
     catch(err){
         
-        res.status(500).json(err);
+        res.status(500).json({message : err.response.data.message, token : error.response.data.token});  //accessing passed values from verify token value
     }
      
 })
