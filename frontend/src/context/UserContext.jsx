@@ -17,17 +17,25 @@ export function UserContextProvider({children}){
 
     },[])
 
-    const getUser=async()=>{
-      try{
-        const res=await axios.get(URL+"/api/auth/refetch",{withCredentials:true})
-        // console.log(res.data)
-        setUser(res.data)
-
+    const getUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.log("No token found");
+          return;
+        }
+  
+        const res = await axios.get(URL + "/api/auth/refetch", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
       }
-      catch(err){
-        console.log(err)
-      }
-    }
+    };
     
     return (<UserContext.Provider value={{user,setUser}}>
       {children}
