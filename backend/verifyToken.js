@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
   // Extract token from Authorization header
   const token = authHeader.split(' ')[1];
 
-  jwt.verify(token, process.env.SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.SECRET, (err, data) => {
     if (err) {
       return res.status(403).json("Token is not valid!");
     }
