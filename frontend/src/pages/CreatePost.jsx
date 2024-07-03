@@ -76,6 +76,9 @@ const CreatePost = () => {
     // console.log("token value");
     // console.log(token);
 
+   
+    console.log(user.username) // for deployment it is important to handle context also
+
     try {
       const res = await axios.post(URL + "/api/posts/create", post, {
         headers: {
