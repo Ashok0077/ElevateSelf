@@ -46,7 +46,7 @@ const CreatePost = () => {
       setImagePreview(null);
     }
   }
-
+  
   const handleCreate = async (e) => {
     e.preventDefault();
     const post = {
@@ -71,8 +71,15 @@ const CreatePost = () => {
       }
     }
 
+    const token = localStorage.getItem("token");
+
     try {
-      const res = await axios.post(URL + "/api/posts/create", post, { withCredentials: true });
+      const res = await axios.post(URL + "/api/posts/create", post, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      });
       navigate("/posts/post/" + res.data._id);
     } catch (err) {
       console.log(err);
