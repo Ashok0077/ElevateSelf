@@ -38,7 +38,8 @@ router.post("/login",async (req,res)=>{
         }
         const token=jwt.sign({_id:user._id,username:user.username,email:user.email},process.env.SECRET,{expiresIn:"3d"}) //signing the token
         const {password,...info}=user._doc
-        res.cookie("token",token).status(200).json(info) //passing it as cookies
+      //  res.cookie("token",token).status(200).json(info) //passing it as cookies
+      res.status(200).json({token,info}); // storing token in local storage
 
     }
     catch(err){

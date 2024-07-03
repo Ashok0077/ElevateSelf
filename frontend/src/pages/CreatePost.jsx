@@ -72,7 +72,7 @@ const CreatePost = () => {
       }
     }
 
-    const token = Cookies.get("token");
+    const token = localStorage.getItem("token");
     console.log("token value");
     console.log(token);
 
