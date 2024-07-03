@@ -17,7 +17,7 @@ router.post("/create",verifyToken,async (req,res)=>{
     }
     catch(err){
         
-        res.status(500).json({message : err.message, token : err.token});
+        res.status(500).json(err);
     }
      
 })
