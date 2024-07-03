@@ -52,7 +52,8 @@ router.post("/login",async (req,res)=>{
 //LOGOUT
 router.get("/logout",async (req,res)=>{
     try{
-        res.clearCookie("token",{sameSite:"none",secure:true}).status(200).send("User logged out successfully!!!!!")
+        //res.clearCookie("token",{sameSite:"none",secure:true}).status(200).send("User logged out successfully!!!!!")
+        res.status(200).send("User logged out successfully!!!!!"); //here we directly put success status but we have to handle logout in userContext File
 
     }
     catch(err){

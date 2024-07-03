@@ -22,7 +22,7 @@ const Navbar = () => {
   }
   
    
-    const {user}=useContext(UserContext)
+    const {user, logout}=useContext(UserContext)
     
   return (
     <section className="sticky top-0 left-0 right-0 z-50 bg-white">

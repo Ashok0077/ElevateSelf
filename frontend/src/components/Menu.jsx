@@ -6,15 +6,16 @@ import { Link, useNavigate } from "react-router-dom"
 
 
 const Menu = () => {
-const {user}=useContext(UserContext)
+const {user, logout}=useContext(UserContext)
 const {setUser}=useContext(UserContext)
 const navigate=useNavigate()
 
 const handleLogout=async()=>{
   try{
-    const res=await axios.get(URL+"/api/auth/logout",{withCredentials:true})
-    // console.log(res)
-    setUser(null)
+    logout();
+    // const res=await axios.get(URL+"/api/auth/logout",{withCredentials:true})
+    // // console.log(res)
+    // setUser(null)
     navigate("/login")
 
   }

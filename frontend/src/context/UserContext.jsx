@@ -19,7 +19,7 @@ export function UserContextProvider({children}){
 
     const getUser = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');    // i also had to change this code for deployment through this code user ide and user name get availabe in the whole code
         if (!token) {
           console.log("No token found");
           return;
@@ -36,8 +36,18 @@ export function UserContextProvider({children}){
         console.log(err);
       }
     };
+
+    const logout = async () => {         //logout is added
+      try {
+        await axios.get(URL + "/api/auth/logout");
+        localStorage.removeItem('token');
+        setUser(null);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     
-    return (<UserContext.Provider value={{user,setUser}}>
+    return (<UserContext.Provider value={{user,setUser,logout}}>
       {children}
     </UserContext.Provider>)
 }
