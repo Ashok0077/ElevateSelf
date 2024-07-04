@@ -181,7 +181,8 @@ app.get('/api/file/:filename', async(req, res) => {
 });
 
 // Route to get all files
-app.get('/api/files', (req, res) => {
+app.get('/api/files', async(req, res) => {
+    await connectDB();
     gfs.files.find().toArray((err, files) => {
         if (!files || files.length === 0) {
             return res.status(404).json({ err: 'No files exist' });
