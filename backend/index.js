@@ -224,7 +224,7 @@ const { GridFSBucket, ObjectID } = require('mongodb');
 dotenv.config();
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect("mongodb+srv://Ashok:1234@cluster0.1nejjcf.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
