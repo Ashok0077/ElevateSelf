@@ -166,15 +166,15 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 // Route to retrieve an image by filename
 app.get('/api/file/:filename', async (req, res) => {
     try {
-        gfs.exist({ filename: req.params.filename }, async (err, found) => {
+        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
             if (err) {
                 console.error("Error finding file:", err);
                 return res.status(500).json({ err: 'Error finding file' });
             }
-            if (!found) {
+            if (!file) {
                 return res.status(404).json({ err: 'File not found' });
             }
-            const readstream = gfs.createReadStream({ filename: req.params.filename });
+            const readstream = gfs.createReadStream({ filename: file.filename });
             readstream.pipe(res);
         });
     } catch (err) {
