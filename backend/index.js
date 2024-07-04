@@ -49,6 +49,7 @@ app.get('/health', (req, res) => {
 });
 
 //middlewares
+//app.use(express.urlencoded({extended : false}));  for parsing form data
 app.use(express.static('public'));
 dotenv.config()
 app.use(express.json())
@@ -63,14 +64,15 @@ app.use("/api/comments",commentRoute)
 //image upload
 const storage=multer.diskStorage({
     destination:(req,file,fn)=>{
-        fn(null,"images")
+        return fn(null,"./images") //here we have to mention the destination of folder in which file should go
     },
     filename:(req,file,fn)=>{
-        fn(null,req.body.img)
+        return fn(null,req.body.img)
         // fn(null,"image1.jpg")
     }
-})
+});
 
+//for uploding image
 const upload=multer({storage:storage})
 app.post("/api/upload",upload.single("file"),(req,res)=>{
     // console.log(req.body)
