@@ -64,7 +64,7 @@ app.use("/api/comments",commentRoute)
 //image upload
 const storage=multer.diskStorage({
     destination:(req,file,fn)=>{
-        return fn(null,"./images") //here we have to mention the destination of folder in which file should go
+        return fn(null,"images") //here we have to mention the destination of folder in which file should go
     },
     filename:(req,file,fn)=>{
         return fn(null,req.body.img)
