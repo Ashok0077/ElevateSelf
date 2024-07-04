@@ -85,22 +85,22 @@
 // })
 
 
-const express = require('express')
-const app = express()
-const mongoose = require('mongoose')
-const dotenv = require('dotenv')
-const cors = require('cors')
-const multer = require('multer')
-const path = require("path")
-const cookieParser = require('cookie-parser')
-const authRoute = require('./routes/auth')
-const userRoute = require('./routes/users')
-const postRoute = require('./routes/posts')
-const commentRoute = require('./routes/comments')
-const GridFsStorage = require('multer-gridfs-storage');
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const multer = require('multer');
+const path = require("path");
+const cookieParser = require('cookie-parser');
+const authRoute = require('./routes/auth');
+const userRoute = require('./routes/users');
+const postRoute = require('./routes/posts');
+const commentRoute = require('./routes/comments');
+const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 
-app.use(cors({origin:"https://elevate-self.vercel.app",credentials:true}));
+app.use(cors({origin: "https://elevate-self.vercel.app", credentials: true}));
 
 dotenv.config()
 
@@ -123,6 +123,7 @@ const connectDB = async () => {
 // Create storage engine
 const storage = new GridFsStorage({
     url: "mongodb+srv://Ashok:1234@cluster0.1nejjcf.mongodb.net/ElevateSelf?retryWrites=true&w=majority&appName=Cluster0",
+    options: { useNewUrlParser: true, useUnifiedTopology: true },
     file: (req, file) => {
         return {
             filename: req.body.img || Date.now() + path.extname(file.originalname),
@@ -144,14 +145,13 @@ app.get('/health', (req, res) => {
 });
 
 //middlewares
-//app.use(express.urlencoded({extended : false}));  for parsing form data
 app.use(express.static('public'));
-app.use(express.json())
-app.use(cookieParser())
-app.use("/api/auth", authRoute)
-app.use("/api/users", userRoute)
-app.use("/api/posts", postRoute)
-app.use("/api/comments", commentRoute)
+app.use(express.json());
+app.use(cookieParser());
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/comments", commentRoute);
 
 // for uploading image
 app.post("/api/upload", upload.single("file"), (req, res) => {
@@ -187,7 +187,7 @@ app.get('/api/files', (req, res) => {
     });
 });
 
-connectDB()
+connectDB();
 app.listen(process.env.PORT, () => {
-    console.log("app is running on port " + process.env.PORT)
+    console.log("app is running on port " + process.env.PORT);
 });
