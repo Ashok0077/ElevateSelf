@@ -8,6 +8,7 @@ import { URL } from '../url'
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -32,17 +33,32 @@ const CreatePost = () => {
     setCats(updatedCats);
   }
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
     // Display the selected image preview
     if (selectedFile) {
+       try {
+        //for previewing image
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(selectedFile);
+
+      // storing in firebase
+      const storage = getStorage(app);
+      const storageRef = ref(storage,"images/"+selectedFile.name);
+      await uploadBytes(storageRef,selectedFile);
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log(downloadURL);
+
+      
+       } catch (error) {
+        console.log(error);
+       }
+
     } else {
       setImagePreview(null);
     }
