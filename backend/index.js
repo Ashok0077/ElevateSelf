@@ -119,6 +119,7 @@ const connectDB = async () => {
         return { message: "Connection failed" };
     }
 };
+connectDB();
 
 // Create storage engine
 const storage = new GridFsStorage({
@@ -187,7 +188,7 @@ app.get('/api/files', (req, res) => {
     });
 });
 
-connectDB();
+
 app.listen(process.env.PORT, () => {
     console.log("app is running on port " + process.env.PORT);
 });
