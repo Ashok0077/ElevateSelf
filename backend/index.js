@@ -99,6 +99,7 @@ const postRoute = require('./routes/posts');
 const commentRoute = require('./routes/comments');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
+const { GridFSBucket, ObjectID } = require('mongodb');
 
 app.use(cors({origin: "https://elevate-self.vercel.app", credentials: true}));
 
@@ -174,7 +175,7 @@ app.get('/api/file/:filename', async (req, res) => {
         if (file.contentType.startsWith('image/')) {
             // Read output to browser
             console.log("before read stream");
-            const readstream = gfs.createReadStream(file.filename);
+            const readstream = gfs.createReadStream({ _id: new ObjectID(file._id) });
             console.log("after read stream");
             readstream.pipe(res);
         } else {
