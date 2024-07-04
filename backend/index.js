@@ -162,28 +162,25 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
     res.status(200).json("Image has been uploaded successfully!");
 });
 
-// Route to retrieve image
+// Route to retrieve an image by filename
 app.get('/api/file/:filename', async (req, res) => {
     try {
-        const file = await gfs.files.findOne({ filename: req.params.filename });
+        const file = await gfs.find({ filename: req.params.filename }).toArray();
 
         if (!file || file.length === 0) {
             return res.status(404).json({ err: 'No file exists' });
         }
 
-        // Check if image (adjust as per your expected content types)
-        if (file.contentType.startsWith('image/')) {
-            // Read output to browser
-            console.log("before read stream");
-            const readstream = gfs.createReadStream({ _id: new ObjectID(file._id) });
-            console.log("after read stream");
+        // Check if image (adjust content type as per your files)
+        if (file[0].contentType.startsWith('image/')) {
+            const readstream = gfs.openDownloadStreamByName(req.params.filename);
             readstream.pipe(res);
         } else {
             res.status(404).json({ err: 'Not an image' });
         }
     } catch (err) {
         console.error("Error finding file:", err);
-        res.status(500).json({ err: 'Error finding file'});
+        res.status(500).json({ err: 'Error finding file' });
     }
 });
 
