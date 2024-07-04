@@ -173,7 +173,9 @@ app.get('/api/file/:filename', async (req, res) => {
         // Check if image (adjust as per your expected content types)
         if (file.contentType.startsWith('image/')) {
             // Read output to browser
+            console/log("before read stream");
             const readstream = gfs.createReadStream(file.filename);
+            console.log("after read stream");
             readstream.pipe(res);
         } else {
             res.status(404).json({ err: 'Not an image' });
