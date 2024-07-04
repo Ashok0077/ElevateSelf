@@ -165,13 +165,13 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.get('/api/file/:filename', async (req, res) => {
     try {
         const file = await gfs.files.findOne({ filename: req.params.filename });
-        
+
         if (!file || file.length === 0) {
             return res.status(404).json({ err: 'No file exists' });
         }
 
-        // Check if image
-        if (file.contentType == 'image/jpeg' || file.contentType == 'image/png') {
+        // Check if image (adjust as per your expected content types)
+        if (file.contentType.startsWith('image/')) {
             // Read output to browser
             const readstream = gfs.createReadStream(file.filename);
             readstream.pipe(res);
@@ -183,6 +183,7 @@ app.get('/api/file/:filename', async (req, res) => {
         res.status(500).json({ err: 'Error finding file' });
     }
 });
+
 
 // Route to get all files
 app.get('/api/files', async (req, res) => {
