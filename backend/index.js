@@ -169,7 +169,7 @@ app.get('/api/file/:filename', async (req, res) => {
         gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
             if (err) {
                 console.error("Error finding file:", err);
-                return res.status(500).json({ err: 'Error finding file' });
+                return res.status(500).json({ err: 'Error getting file' });
             }
             if (!file) {
                 return res.status(404).json({ err: 'File not found' });
