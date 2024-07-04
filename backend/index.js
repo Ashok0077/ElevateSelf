@@ -230,7 +230,10 @@ mongoose.connect(process.env.MONGODB_URI, {
     useCreateIndex: true,
     useFindAndModify: false
 })
-.then(() => console.log("Database connected successfully"))
+.then(() => {
+    console.log("Database connected successfully");
+    initGFS();
+})
 .catch(err => console.error("Database connection error:", err));
 
 const db = mongoose.connection;
@@ -242,13 +245,13 @@ db.once('open', () => console.log('MongoDB connection established'));
 // GridFS setup
 let gfs;
 
-db.once('open', () => {
+function initGFS() {
     gfs = new mongoose.mongo.GridFSBucket(db.db, {
         bucketName: 'uploads'
     });
-});
+}
 
-// Multer storage engine for GridFS
+// Multer storage engine for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './public/uploads'); // Adjust as needed
@@ -299,6 +302,10 @@ app.get('/api/file/:filename', async (req, res) => {
 // Route to fetch all files metadata
 app.get('/api/files', async (req, res) => {
     try {
+        if (!gfs) {
+            throw new Error('GridFSBucket is not initialized');
+        }
+
         const files = await gfs.find().toArray();
 
         if (!files || files.length === 0) {
