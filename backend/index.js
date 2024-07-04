@@ -180,7 +180,7 @@ app.get('/api/file/:filename', async (req, res) => {
         }
     } catch (err) {
         console.error("Error finding file:", err);
-        res.status(500).json({ err: 'Error finding file' });
+        res.status(500).json({ err: 'Error finding file', file : 'file'});
     }
 });
 
