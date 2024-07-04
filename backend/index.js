@@ -140,7 +140,8 @@ app.get("/", async (req, res) => {
     res.status(status.message === "Connection successful" ? 200 : 500).json(status);
 });
 
-app.get('/health', (req, res) => {
+app.get('/health', async(req, res) => {
+    await connectDB();
     const connectionState = mongoose.connection.readyState;
     res.json({ connected: connectionState === 1 });
 });
@@ -161,7 +162,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 
 // Route to retrieve image
-app.get('/api/file/:filename', (req, res) => {
+app.get('/api/file/:filename', async(req, res) => {
+    await connectDB();
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
         if (!file || file.length === 0) {
             return res.status(404).json({ err: 'No file exists' });
