@@ -9,6 +9,7 @@ import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
+import app from '../firebase'
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
