@@ -162,33 +162,35 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 
 // Route to retrieve image
-app.get('/api/file/:filename', async(req, res) => {
-    await connectDB();
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-        if (!file || file.length === 0) {
-            return res.status(404).json({ err: 'No file exists' });
-        }
+app.get('/api/file/:filename', (req, res) => {
+        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+            if (!file || file.length === 0) {
+                return res.status(404).json({ err: 'No file exists' });
+            }
 
-        // Check if image
-        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-            // Read output to browser
-            const readstream = gfs.createReadStream(file.filename);
-            readstream.pipe(res);
-        } else {
-            res.status(404).json({ err: 'Not an image' });
-        }
+            // Check if image
+            if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+                // Read output to browser
+                const readstream = gfs.createReadStream(file.filename);
+                readstream.pipe(res);
+            } else {
+                res.status(404).json({ err: 'Not an image' });
+            }
+        });
     });
-});
 
 // Route to get all files
-app.get('/api/files', async(req, res) => {
-    await connectDB();
-    gfs.files.find().toArray((err, files) => {
+app.get('/api/files', async (req, res) => {
+    try {
+        const files = await gfs.files.find().toArray();
         if (!files || files.length === 0) {
             return res.status(404).json({ err: 'No files exist' });
         }
         return res.json(files);
-    });
+    } catch (err) {
+        console.error("Error fetching files:", err);
+        res.status(500).json({ err: 'Error fetching files' });
+    }
 });
 
 
