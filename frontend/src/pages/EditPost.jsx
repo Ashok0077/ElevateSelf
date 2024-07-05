@@ -89,7 +89,7 @@ const EditPost = () => {
       const downloadURL = await getDownloadURL(storageRef);
       setImageURL(downloadURL);
       console.log(downloadURL);
-      setImagePreview(reader.result);
+      setImagePreview(downloadURL);
     } else {
       setImagePreview(null);
     }
