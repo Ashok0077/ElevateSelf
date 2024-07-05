@@ -56,7 +56,7 @@ const CreatePost = () => {
       await uploadBytes(storageRef,selectedFile);
       const getdownloadURL = await getDownloadURL(storageRef);
       setDownloadURL(getdownloadURL);
-      console.log(downloadURL);
+      console.log(getdownloadURL);
 
       
        } catch (error) {
