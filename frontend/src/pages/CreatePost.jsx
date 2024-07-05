@@ -20,7 +20,7 @@ const CreatePost = () => {
   const [cat, setCat] = useState("");
   const [cats, setCats] = useState([]);
   const navigate = useNavigate();
-  const downloadURL="";
+  const [downloadURL, setDownloadURL] = useState("");
 
   const deleteCategory = (i) => {
     let updatedCats = [...cats];
@@ -54,7 +54,8 @@ const CreatePost = () => {
       const filename = Date.now() + selectedFile.name;
       const storageRef = ref(storage,"images/"+filename);
       await uploadBytes(storageRef,selectedFile);
-      downloadURL = await getDownloadURL(storageRef);
+      const getdownloadURL = await getDownloadURL(storageRef);
+      setDownloadURL(getdownloadURL);
       console.log(downloadURL);
 
       
@@ -77,7 +78,7 @@ const CreatePost = () => {
       categories: cats
     }
 
-    if (downloadURL != "") {
+    if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
       data.append("img", filename);
