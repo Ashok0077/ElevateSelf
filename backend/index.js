@@ -43,10 +43,10 @@ app.get("/", async (req, res) => {
     res.status(status.message === "Connection successful" ? 200 : 500).json(status);
 });
 
-app.get('/health', (req, res) => {
-    const connectionState = mongoose.connection.readyState;
-    res.json({ connected: connectionState === 1 });
-});
+// app.get('/health', (req, res) => {
+//     const connectionState = mongoose.connection.readyState;
+//     res.json({ connected: connectionState === 1 });
+// });
 
 //middlewares
 //app.use(express.urlencoded({extended : false}));  for parsing form data

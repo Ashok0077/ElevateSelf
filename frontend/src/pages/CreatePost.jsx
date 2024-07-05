@@ -50,7 +50,8 @@ const CreatePost = () => {
 
       // storing in firebase
       const storage = getStorage(app);
-      const storageRef = ref(storage,"images/"+selectedFile.name);
+      const filename = Date.now() + selectedFile.name;
+      const storageRef = ref(storage,"images/"+filename);
       await uploadBytes(storageRef,selectedFile);
       const downloadURL = await getDownloadURL(storageRef);
       console.log(downloadURL);
