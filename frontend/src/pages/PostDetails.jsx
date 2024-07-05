@@ -188,7 +188,8 @@ const PostDetails = () => {
        <p>{new Date(post.updatedAt).toString().slice(16,24)}</p>
        </div>
         </div>
-        <img src={post.photo? IF+post.photo : sampleImage} className="rounded-xl w-full  mx-auto mt-8" alt=""/>
+        {/* <img src={post.photo? IF+post.photo : sampleImage} className="rounded-xl w-full  mx-auto mt-8" alt=""/> */}
+        <img src={post.photo? post.photo : sampleImage} className="rounded-xl w-full  mx-auto mt-8" alt=""/>
         <h1 className="text-2xl font-bold text-[#0e2436] md:text-3xl">{post.title}</h1>
          <p className=" text-gray-700 mx-auto mt-8">{post.desc}</p>
          <div className="text-[#0e2436] flex items-center mt-8 space-x-4 font-semibold">

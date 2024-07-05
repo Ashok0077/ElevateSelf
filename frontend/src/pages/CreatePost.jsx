@@ -20,7 +20,7 @@ const CreatePost = () => {
   const [cat, setCat] = useState("");
   const [cats, setCats] = useState([]);
   const navigate = useNavigate();
-  const [downloadURL, setDownloadURL] = useState("");
+  const [imageURL, setImageURL] = useState("");
 
   const deleteCategory = (i) => {
     let updatedCats = [...cats];
@@ -54,9 +54,9 @@ const CreatePost = () => {
       const filename = Date.now() + selectedFile.name;
       const storageRef = ref(storage,"images/"+filename);
       await uploadBytes(storageRef,selectedFile);
-      const getdownloadURL = await getDownloadURL(storageRef);
-      setDownloadURL(getdownloadURL);
-      console.log(getdownloadURL);
+      const downloadURL = await getDownloadURL(storageRef);
+      setImageURL(downloadURL);
+      console.log(downloadURL);
 
       
        } catch (error) {
@@ -85,7 +85,7 @@ const CreatePost = () => {
       data.append("file", file);
       //post.photo = filename;
 
-      post.photo = downloadURL;
+      post.photo = imageURL;
 
       try {
         const imgUpload = await axios.post(URL + "/api/upload", data);
