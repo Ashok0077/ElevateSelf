@@ -6,6 +6,8 @@ import axios from 'axios'
 import { URL } from '../url'
 import { useNavigate, useParams } from 'react-router-dom'
 import { UserContext } from '../context/UserContext'
+import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
+import app from '../firebase'
 
 const EditPost = () => {
   const postId = useParams().id

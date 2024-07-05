@@ -12,8 +12,7 @@ import Hero from "../components/Hero.jsx";
 import { FaArrowRight } from "react-icons/fa";
 import ErrorMessage from "../components/ErrorMessage";
 import ArticleCardSkeleton from "../components/ArticleCardSkeleton";
-import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
-import app from '../firebase'
+
 
 
 const Home = () => {
