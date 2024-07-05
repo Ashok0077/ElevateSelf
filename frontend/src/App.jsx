@@ -19,9 +19,10 @@ const App = () => {
 
   
   return (
-      <BrowserRouter>
-      <ScrollToTop/>
+      
+      
       <UserContextProvider>
+      <ScrollToTop/>
       <Routes>
       <Route exact path="/" element={<Home/>}/>
       <Route exact path="/login" element={<Login/>}/>
@@ -34,7 +35,7 @@ const App = () => {
       <Route exact path="/UserProfile/:id" element={<UserProfile/>}/>
       </Routes>
       </UserContextProvider>
-      </BrowserRouter>
+      
   )
 }
 
