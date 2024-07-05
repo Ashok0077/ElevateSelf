@@ -19,7 +19,7 @@ const SuggestedPosts = ({ className, posts = [] }) => {
           >
             <img
               className="aspect-square object-cover rounded-lg w-1/5"
-              src={item?.photo ? IF + item?.photo : sampleImage}
+              src={item?.photo ?  item?.photo : sampleImage}
               alt="image"
             />
 

@@ -17,6 +17,7 @@ const EditPost = () => {
   const [file, setFile] = useState(null)
   const [cat, setCat] = useState('')
   const [cats, setCats] = useState([])
+  const [imageURL, setImageURL] = useState("");
 
   const fetchPost = async () => {
     try {
@@ -45,7 +46,7 @@ const EditPost = () => {
       const filename = Date.now() + file.name
       data.append('img', filename)
       data.append('file', file)
-      post.photo = filename
+      post.photo = imageURL;
 
       try {
         const imgUpload = await axios.post(URL + '/api/upload', data)
@@ -82,7 +83,7 @@ const EditPost = () => {
     setCats(updatedCats)
   }
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
@@ -93,6 +94,13 @@ const EditPost = () => {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(selectedFile);
+      const storage = getStorage(app);
+      const filename = Date.now() + selectedFile.name;
+      const storageRef = ref(storage,"images/"+filename);
+      await uploadBytes(storageRef,selectedFile);
+      const downloadURL = await getDownloadURL(storageRef);
+      setImageURL(downloadURL);
+      console.log(downloadURL);
     } else {
       setImagePreview(null);
     }
