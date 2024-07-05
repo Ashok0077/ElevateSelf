@@ -27,6 +27,7 @@ const EditPost = () => {
       setTitle(res.data.title)
       setDesc(res.data.desc)
       setFile(res.data.photo)
+      setImagePreview(res.data.photo)
       setCats(res.data.categories)
     } catch (err) {
       console.log(err)
