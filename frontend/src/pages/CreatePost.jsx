@@ -77,7 +77,7 @@ const CreatePost = () => {
       categories: cats
     }
 
-    if (file) {
+    if (downloadURL != "") {
       const data = new FormData();
       const filename = Date.now() + file.name;
       data.append("img", filename);
