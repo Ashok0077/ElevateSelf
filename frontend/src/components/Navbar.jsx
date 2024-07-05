@@ -29,8 +29,8 @@ const Navbar = () => {
     <div className="container mx-auto px-5 flex justify-between py-4 items-center">
     <h1 className="text-[#183b56] text-lg md:text-3xl font-extrabold"><Link to="/">ElevateSelf</Link></h1>
     {path==="/" && <div className="flex justify-center items-center space-x-0">
-    <p onClick={()=>navigate(prompt?"?search="+prompt:navigate("/"))} className="text-[#1565d8] cursor-pointer"><BsSearch/></p>
-    <input onChange={(e)=>setPrompt(e.target.value)} className="outline-none px-3 " placeholder="Search a post" type="text"/>
+    {/* <p onClick={()=>navigate(prompt?"?search="+prompt:navigate("/"))} className="text-[#1565d8] cursor-pointer"><BsSearch/></p>
+    <input onChange={(e)=>setPrompt(e.target.value)} className="outline-none px-3 " placeholder="Search a post" type="text"/> */}
     
     </div>}
     <div className="hidden md:flex items-center justify-center space-x-2 md:space-x-4">
