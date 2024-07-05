@@ -20,6 +20,7 @@ const CreatePost = () => {
   const [cat, setCat] = useState("");
   const [cats, setCats] = useState([]);
   const navigate = useNavigate();
+  const downloadURL="";
 
   const deleteCategory = (i) => {
     let updatedCats = [...cats];
@@ -53,7 +54,7 @@ const CreatePost = () => {
       const filename = Date.now() + selectedFile.name;
       const storageRef = ref(storage,"images/"+filename);
       await uploadBytes(storageRef,selectedFile);
-      const downloadURL = await getDownloadURL(storageRef);
+      downloadURL = await getDownloadURL(storageRef);
       console.log(downloadURL);
 
       
@@ -81,7 +82,9 @@ const CreatePost = () => {
       const filename = Date.now() + file.name;
       data.append("img", filename);
       data.append("file", file);
-      post.photo = filename;
+      //post.photo = filename;
+
+      post.photo = downloadURL;
 
       try {
         const imgUpload = await axios.post(URL + "/api/upload", data);
