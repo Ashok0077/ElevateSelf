@@ -1,5 +1,5 @@
 
-import {Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
@@ -10,6 +10,7 @@ import Profile from './pages/Profile'
 import {  UserContextProvider } from './context/UserContext'
 import MyBlogs from './pages/MyBlogs'
 import UserProfile from './pages/UserProfile'
+import ScrollToTop from './components/ScrollToTop'
 
 
 
@@ -18,6 +19,8 @@ const App = () => {
 
   
   return (
+      <BrowserRouter>
+      <ScrollToTop/>
       <UserContextProvider>
       <Routes>
       <Route exact path="/" element={<Home/>}/>
@@ -30,8 +33,8 @@ const App = () => {
       <Route exact path="/profile/:id" element={<Profile/>}/>
       <Route exact path="/UserProfile/:id" element={<UserProfile/>}/>
       </Routes>
-    
       </UserContextProvider>
+      </BrowserRouter>
   )
 }
 
