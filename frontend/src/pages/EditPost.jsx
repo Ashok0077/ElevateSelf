@@ -45,17 +45,7 @@ const EditPost = () => {
     }
 
     if (file) {
-      const data = new FormData()
-      const filename = Date.now() + file.name
-      data.append('img', filename)
-      data.append('file', file)
       post.photo = imageURL;
-
-      try {
-        const imgUpload = await axios.post(URL + '/api/upload', data)
-      } catch (err) {
-        console.log(err)
-      }
     }
 
     const token = localStorage.getItem("token");
@@ -92,11 +82,6 @@ const EditPost = () => {
 
     // Display the selected image preview
     if (selectedFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(selectedFile);
       const storage = getStorage(app);
       const filename = Date.now() + selectedFile.name;
       const storageRef = ref(storage,"images/"+filename);
@@ -104,6 +89,7 @@ const EditPost = () => {
       const downloadURL = await getDownloadURL(storageRef);
       setImageURL(downloadURL);
       console.log(downloadURL);
+      setImagePreview(reader.result);
     } else {
       setImagePreview(null);
     }

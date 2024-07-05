@@ -62,22 +62,22 @@ app.use("/api/comments",commentRoute)
 
 
 //image upload
-const storage=multer.diskStorage({
-    destination:(req,file,fn)=>{
-         fn(null,"images") //here we have to mention the destination of folder in which file should go
-    },
-    filename:(req,file,fn)=>{
-         fn(null,req.body.img)
-        // fn(null,"image1.jpg")
-    }
-});
+// const storage=multer.diskStorage({
+//     destination:(req,file,fn)=>{
+//          fn(null,"images") //here we have to mention the destination of folder in which file should go
+//     },
+//     filename:(req,file,fn)=>{
+//          fn(null,req.body.img)
+//         // fn(null,"image1.jpg")
+//     }
+// });
 
-//for uploding image
-const upload=multer({storage:storage})
-app.post("/api/upload",upload.single("file"),(req,res)=>{
-     console.log(req.body)
-    res.status(200).json("Image has been uploaded successfully!")
-})
+// //for uploding image
+// const upload=multer({storage:storage})
+// app.post("/api/upload",upload.single("file"),(req,res)=>{
+//      console.log(req.body)
+//     res.status(200).json("Image has been uploaded successfully!")
+// })
 
 connectDB()
 app.listen(process.env.PORT,()=>{

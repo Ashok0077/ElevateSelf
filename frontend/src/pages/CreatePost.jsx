@@ -42,13 +42,6 @@ const CreatePost = () => {
     // Display the selected image preview
     if (selectedFile) {
        try {
-        //for previewing image
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(selectedFile);
-
       // storing in firebase
       const storage = getStorage(app);
       const filename = Date.now() + selectedFile.name;
@@ -57,6 +50,9 @@ const CreatePost = () => {
       const downloadURL = await getDownloadURL(storageRef);
       setImageURL(downloadURL);
       console.log(downloadURL);
+
+      //for image previewing
+      setImagePreview(downloadURL);
 
       
        } catch (error) {
@@ -79,19 +75,19 @@ const CreatePost = () => {
     }
 
     if (file) {
-      const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("img", filename);
-      data.append("file", file);
+      // const data = new FormData();
+      // const filename = Date.now() + file.name;
+      // data.append("img", filename);
+      // data.append("file", file);
       //post.photo = filename;
 
       post.photo = imageURL;
 
-      try {
-        const imgUpload = await axios.post(URL + "/api/upload", data);
-      } catch (err) {
-        console.log(err);
-      }
+      // try {
+      //   const imgUpload = await axios.post(URL + "/api/upload", data);
+      // } catch (err) {
+      //   console.log(err);
+      // }
     }
 
     const token = localStorage.getItem("token");
