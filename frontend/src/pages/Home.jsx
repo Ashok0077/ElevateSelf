@@ -26,6 +26,7 @@ const Home = () => {
     setLoader(true);
     try {
       const res = await axios.get(URL + "/api/posts/" + search);
+      console.log(res);
       setPosts(res.data);
       if (res.data.length === 0) {
         setNoResults(true);
