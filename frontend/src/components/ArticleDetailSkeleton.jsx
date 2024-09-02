@@ -2,7 +2,7 @@ import { BiImageAlt } from "react-icons/bi";
 
 const ArticleDetailSkeleton = () => {
   return (
-    <section className="container mx-auto max-w-5xl flex flex-col px-5 py-5 lg:flex-row lg:gap-x-5 lg:items-start animate-pulse">
+    <section className="container mx-auto max-w-5xl flex flex-col px-5 py-5 lg:flex-row lg:gap-x-5 lg:items-start animate-pulse mb-10">
       <article className="flex-1">
         {/* post image */}
         <div className="rounded-xl w-full aspect-video bg-slate-300 flex justify-center items-center">
