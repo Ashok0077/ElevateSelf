@@ -12,7 +12,26 @@ const postRoute=require('./routes/posts')
 const commentRoute=require('./routes/comments')
 
 
-app.use(cors({origin:"https://elevate-self.vercel.app",credentials:true}));
+// app.use(cors({origin:"https://elevate-self.vercel.app",credentials:true}));
+// app.use(cors({origin:"http://localhost:5173",credentials:true}));
+
+const allowedOrigins = [
+    "https://elevate-self.vercel.app",
+    "http://localhost:5173"
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
+  }));
+
+
 //app.use(cors({origin:"https://elevate-self-frontend.vercel.app",method: ["POST","GET"], credentials:true}));
 
 // const corsConfig = {
