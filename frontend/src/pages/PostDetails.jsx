@@ -5,19 +5,18 @@ import Navbar from "../components/Navbar";
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
-import { URL, IF } from "../url";
-import { useContext, useEffect, useState } from "react";
+import { URL } from "../url";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { UserContext } from "../context/UserContext";
 import Loader from "../components/Loader";
 import avatarImage from "../assets/user.png";
-import { Link } from "react-router-dom";
 import ArticleDetailSkeleton from "../components/ArticleDetailSkeleton";
 import SuggestedPosts from "../components/SuggestedPosts";
 import SocialShareButtons from "../components/SocialShareButtons";
 import sampleImage from "../assets/sample.jpg";
 
 const PostDetails = () => {
-  const postId = useParams().id;
+  const { id: postId } = useParams();
   const [post, setPost] = useState({});
   const { user } = useContext(UserContext);
   const { search } = useLocation();
@@ -29,82 +28,61 @@ const PostDetails = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     setLoader(true);
     try {
-      const res = await axios.get(URL + "/api/posts/" + search);
+      const res = await axios.get(`${URL}/api/posts${search}`);
       setPosts(res.data);
-      if (res.data.length === 0) {
-        setNoResults(true);
-      } else {
-        setNoResults(false);
-      }
-      setLoader(false);
+      setNoResults(res.data.length === 0);
     } catch (err) {
-      console.log(err);
-      setLoader(true);
+      console.error("Error fetching posts:", err);
+    } finally {
+      setLoader(false);
     }
-  };
+  }, [search]);
 
   useEffect(() => {
     fetchPosts();
-  }, [search]);
+  }, [fetchPosts]);
 
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
     try {
-      const res = await axios.get(URL + "/api/posts/" + postId);
-      // console.log(res.data)
+      const res = await axios.get(`${URL}/api/posts/${postId}`);
       setPost(res.data);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching post:", err);
     }
-  };
-
-  const handleDeletePost = async () => {
-    try {
-      const res = await axios.delete(URL + "/api/posts/" + postId, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res.data);
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [postId]);
 
   useEffect(() => {
     fetchPost();
-  }, [postId]);
+  }, [fetchPost]);
 
-  const fetchPostComments = async () => {
+  const fetchPostComments = useCallback(async () => {
     setLoader(true);
     try {
-      const res = await axios.get(URL + "/api/comments/post/" + postId);
+      const res = await axios.get(`${URL}/api/comments/post/${postId}`);
       setComments(res.data);
-      setLoader(false);
     } catch (err) {
-      setLoader(true);
-      console.log(err);
+      console.error("Error fetching comments:", err);
+    } finally {
+      setLoader(false);
     }
-  };
+  }, [postId]);
 
   useEffect(() => {
     fetchPostComments();
-  }, [postId]);
+  }, [fetchPostComments]);
 
   const postComment = async (e) => {
     e.preventDefault();
     try {
-      // Post the comment
       const res = await axios.post(
-        URL + "/api/comments/create",
+        `${URL}/api/comments/create`,
         {
-          comment: comment,
+          comment,
           author: user.username,
-          postId: postId,
+          postId,
           userId: user._id,
         },
         {
@@ -114,20 +92,49 @@ const PostDetails = () => {
           },
         }
       );
-
-      // Update the comments state with the newly added comment
-      setComments([...comments, res.data]);
-
-      // Clear the comment input field
+      setComments((prevComments) => [...prevComments, res.data]);
       setComment("");
     } catch (err) {
-      console.log(err);
+      console.error("Error posting comment:", err);
+    }
+  };
+
+  const handleDeleteComment = useCallback(
+    async (commentId) => {
+      try {
+        await axios.delete(`${URL}/api/comments/${commentId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setComments((prevComments) =>
+          prevComments.filter((c) => c._id !== commentId)
+        );
+      } catch (err) {
+        console.error("Error deleting comment:", err);
+        alert("Failed to delete comment. Please try again.");
+      }
+    },
+    [token]
+  );
+
+  const handleDeletePost = async () => {
+    try {
+      await axios.delete(`${URL}/api/posts/${postId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      navigate("/");
+    } catch (err) {
+      console.error("Error deleting post:", err);
     }
   };
 
   const handleUserProfileClick = async () => {
     try {
-      // Increment the view count in the backend
       await axios.put(`${URL}/api/users/${post?.userId}/increment-view`, null, {
         headers: {
           "Content-Type": "application/json",
@@ -135,7 +142,6 @@ const PostDetails = () => {
         },
       });
 
-      // Navigate to the user's profile
       navigate(`/UserProfile/${post?.userId}`);
     } catch (err) {
       console.error(
@@ -157,7 +163,6 @@ const PostDetails = () => {
         <section className="container mx-auto max-w-5xl flex flex-col px-5 py-5 lg:flex-row lg:gap-x-5 lg:items-start">
           <article className="flex-1">
             <div className="flex justify-between items-center">
-              {/* <h1 className="text-2xl font-bold text-black md:text-3xl">{post.title}</h1> */}
               {user?._id === post?.userId && (
                 <div className="flex items-center justify-center space-x-2">
                   <p
@@ -178,7 +183,6 @@ const PostDetails = () => {
                 onClick={handleUserProfileClick}
               >
                 <div className="w-10 h-10 rounded-full overflow-hidden mr-2">
-                  {/* Replace 'avatar-url.jpg' with the actual URL of the user's avatar */}
                   <img
                     className="w-full h-full object-cover"
                     src={avatarImage}
@@ -193,25 +197,22 @@ const PostDetails = () => {
                 <p>{new Date(post.updatedAt).toString().slice(16, 24)}</p>
               </div>
             </div>
-            {/* <img src={post.photo? IF+post.photo : sampleImage} className="rounded-xl w-full  mx-auto mt-8" alt=""/> */}
             <img
               src={post.photo ? post.photo : sampleImage}
-              className="rounded-xl w-full  mx-auto mt-8"
-              alt=""
+              className="rounded-xl w-full mx-auto mt-8"
+              alt="Post"
             />
             <h1 className="text-2xl font-bold text-[#0e2436] md:text-3xl">
               {post.title}
             </h1>
-            <p className=" text-gray-700 mx-auto mt-8">{post.desc}</p>
+            <p className="text-gray-700 mx-auto mt-8">{post.desc}</p>
             <div className="text-[#0e2436] flex items-center mt-8 space-x-4 font-semibold">
               <p>Categories:</p>
               <div className="flex justify-center items-center space-x-2">
                 {post.categories?.map((c, i) => (
-                  <>
-                    <div key={i} className="bg-gray-300 rounded-lg px-3 py-1">
-                      {c}
-                    </div>
-                  </>
+                  <div key={i} className="bg-gray-300 rounded-lg px-3 py-1">
+                    {c}
+                  </div>
                 ))}
               </div>
             </div>
@@ -219,13 +220,18 @@ const PostDetails = () => {
               <h3 className="text-[#0e2436] mt-6 mb-4 font-semibold">
                 Queries:
               </h3>
-              {comments?.map((c) => (
-                <Comment key={c._id} c={c} post={post} />
+              {comments.map((c) => (
+                <Comment
+                  key={c._id}
+                  c={c}
+                  post={post}
+                  onDelete={handleDeleteComment}
+                />
               ))}
             </div>
-            {/* write a comment */}
             <div className="w-full flex flex-col mt-4 md:flex-row">
               <input
+                value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 type="text"
                 placeholder="Write a comment"
