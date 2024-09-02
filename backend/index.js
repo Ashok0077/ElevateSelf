@@ -32,16 +32,6 @@ const allowedOrigins = [
   }));
 
 
-//app.use(cors({origin:"https://elevate-self-frontend.vercel.app",method: ["POST","GET"], credentials:true}));
-
-// const corsConfig = {
-//     origin: "http://localhost:5173",
-//     credentials: true,
-//     methods: ["GET", "POST"]
-// };
-
-// app.use(cors(corsConfig));
-// app.use(cors());
 
 
 //database
@@ -62,13 +52,7 @@ app.get("/", async (req, res) => {
     res.status(status.message === "Connection successful" ? 200 : 500).json(status);
 });
 
-// app.get('/health', (req, res) => {
-//     const connectionState = mongoose.connection.readyState;
-//     res.json({ connected: connectionState === 1 });
-// });
 
-//middlewares
-//app.use(express.urlencoded({extended : false}));  for parsing form data
 app.use(express.static('public'));
 dotenv.config()
 app.use(express.json())
@@ -80,28 +64,32 @@ app.use("/api/posts",postRoute)
 app.use("/api/comments",commentRoute)
 
 
-//image upload
-// const storage=multer.diskStorage({
-//     destination:(req,file,fn)=>{
-//          fn(null,"images") //here we have to mention the destination of folder in which file should go
-//     },
-//     filename:(req,file,fn)=>{
-//          fn(null,req.body.img)
-//         // fn(null,"image1.jpg")
-//     }
-// });
-
-// //for uploding image
-// const upload=multer({storage:storage})
-// app.post("/api/upload",upload.single("file"),(req,res)=>{
-//      console.log(req.body)
-//     res.status(200).json("Image has been uploaded successfully!")
-// })
 
 connectDB()
 app.listen(process.env.PORT,()=>{
     console.log("app is running on port "+process.env.PORT)
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -126,6 +114,18 @@ app.listen(process.env.PORT,()=>{
 
 // app.use(cors({origin: "https://elevate-self.vercel.app", credentials: true}));
 
+//app.use(cors({origin:"https://elevate-self-frontend.vercel.app",method: ["POST","GET"], credentials:true}));
+
+// const corsConfig = {
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//     methods: ["GET", "POST"]
+// };
+
+// app.use(cors(corsConfig));
+// app.use(cors());
+
+
 // dotenv.config()
 
 // //database
@@ -144,6 +144,25 @@ app.listen(process.env.PORT,()=>{
 //     }
 // };
 // connectDB();
+
+//image upload
+// const storage=multer.diskStorage({
+//     destination:(req,file,fn)=>{
+//          fn(null,"images") //here we have to mention the destination of folder in which file should go
+//     },
+//     filename:(req,file,fn)=>{
+//          fn(null,req.body.img)
+//         // fn(null,"image1.jpg")
+//     }
+// });
+
+// //for uploding image
+// const upload=multer({storage:storage})
+// app.post("/api/upload",upload.single("file"),(req,res)=>{
+//      console.log(req.body)
+//     res.status(200).json("Image has been uploaded successfully!")
+// })
+
 
 // // Create storage engine
 // const storage = new GridFsStorage({
