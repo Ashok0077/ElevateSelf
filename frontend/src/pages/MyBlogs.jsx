@@ -37,12 +37,12 @@ const MyBlogs = () => {
     <div>
       <Navbar />
       <section className="container mx-auto px-5 py-10">
-      <div className="flex flex-wrap md:gap-x-5 gap-y-5 pb-10">
+        <div className="flex flex-wrap md:gap-x-5 gap-y-5 pb-10">
           {loader ? (
             [...Array(3)].map((item, index) => (
               <ArticleCardSkeleton
                 key={index}
-                className="w-full md:w-[calc(50%-20px)] lg:w-[calc(33.33%-21px)]"
+                className="w-full md:w-[calc(33.33%-20px)] lg:w-[calc(33.33%-20px)]"
               />
             ))
           ) : noResults ? (
@@ -52,7 +52,7 @@ const MyBlogs = () => {
               <HomePosts
                 key={post.id}
                 post={post}
-                className="w-full md:w-1/2 lg:w-1/3 aspect-w-16 aspect-h-9"
+                className="w-full md:w-[calc(33.33%-20px)] lg:w-[calc(33.33%-20px)] aspect-w-16 aspect-h-9"
               />
             ))
           )}
@@ -64,3 +64,4 @@ const MyBlogs = () => {
 };
 
 export default MyBlogs;
+

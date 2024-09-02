@@ -44,7 +44,7 @@ const Hero = () => {
             Popular Tags:
           </span>
           <ul className="flex flex-wrap gap-x-2.5 gap-y-2.5 mt-3 lg:text-sm xl:text-base">
-            {["interviews", "UPSE", "Placement", "Fitness"].map((tag) => (
+            {["interviews", "UPSC", "Placement", "Fitness"].map((tag) => (
               <li
                 key={tag}
                 onClick={() => handleTagClick(tag)}

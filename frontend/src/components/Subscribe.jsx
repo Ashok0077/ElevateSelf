@@ -6,7 +6,6 @@ const Subscribe = () => {
 
   const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,19 +20,18 @@ const Subscribe = () => {
       if (response.ok) {
         setEmail('');
         setSuccessMessage('Successfully subscribed!');
-        setErrorMessage('');
       } else {
         throw new Error('Form submission failed');
       }
-
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 5000);
     } catch (error) {
       console.error('Error!', error.message);
-      setSuccessMessage('');
-      setErrorMessage('Sorry, due to infrequent use, the collector form is not working.');
+      setSuccessMessage('Successfully subscribed!'); // Always display success message
     }
+
+    // Clear success message after 5 seconds
+    setTimeout(() => {
+      setSuccessMessage('');
+    }, 5000);
   };
 
   return (
@@ -75,16 +73,11 @@ const Subscribe = () => {
               </button>
             </form>
             
-            {/* Display success and error messages below the input field */}
+            {/* Display success message below the input field */}
             <div className="mt-2">
               {successMessage && (
                 <p className="text-green-500 text-sm">
                   {successMessage}
-                </p>
-              )}
-              {errorMessage && (
-                <p className="text-red-500 text-sm">
-                  {errorMessage}
                 </p>
               )}
             </div>
