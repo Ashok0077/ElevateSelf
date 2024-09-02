@@ -25,7 +25,7 @@ const SuggestedPosts = ({ className, posts = [] }) => {
 
             <div className="text-sm font-roboto text-dark-hard font-medium">
               <h3 className="text-sm font-roboto text-[#0e2436] font-medium md:text-base lg:text-lg">
-                <Link to={`/blog/${item.slug}`}>{item.title}</Link>
+                <Link to={`/posts/post/${item._id}`}>{item.title}</Link>
               </h3>
               <span className="text-xs opacity-60">
                 {new Date(item.createdAt).toLocaleDateString("en-US", {
