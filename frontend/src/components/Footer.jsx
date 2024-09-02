@@ -91,8 +91,9 @@ const Footer = () => {
           alt="logo"
           className="brightness-10 mx-auto md:mx-0"
         /> */}
-        <h1 className="text-4xl text-white font-bold">ElevateSelf</h1>
+        
         <p className="text-sm text-[#5a7184] text-center mt-4 md:text-left md:text-base lg:text-sm">
+        <h1 className="text-4xl text-white font-bold">ElevateSelf</h1>
           Nurturing Personal Growth and Motivation
         </p>
         <ul className="flex justify-center items-center mt-5 space-x-4 text-gray-300 md:justify-start">
@@ -128,7 +129,7 @@ const Footer = () => {
           <AiFillHeart className="w-7 h-auto" />
         </div>
         <p className="font-bold italic text-[#5a7184]">
-          Copyright © 2023. Crafted with love.
+          Copyright © 2024. Crafted with love by Ashok.
         </p>
       </div>
     </footer>

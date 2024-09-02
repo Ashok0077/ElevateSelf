@@ -11,20 +11,18 @@ const Profile = () => {
   const param = useParams().id;
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
-  const [view, setView ] = useState("");
+  const [view, setView] = useState("");
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [updated, setUpdated] = useState(false);
-  // console.log(user)
+  const token = localStorage.getItem("token");
 
   const fetchProfile = async () => {
     try {
       const res = await axios.get(URL + "/api/users/" + user._id);
       setUsername(res.data.username);
       setEmail(res.data.email);
-      setPassword(res.data.password);
       setView(res.data.view);
     } catch (err) {
       console.log(err);
@@ -36,10 +34,19 @@ const Profile = () => {
     try {
       const res = await axios.put(
         URL + "/api/users/" + user._id,
-        { username, email, password },
-        { withCredentials: true }
+        {
+          username,
+          email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      // console.log(res.data)
+      
+      setUser(res.data); 
       setUpdated(true);
     } catch (err) {
       console.log(err);
@@ -49,21 +56,22 @@ const Profile = () => {
 
   const handleUserDelete = async () => {
     try {
-      const res = await axios.delete(URL + "/api/users/" + user._id, {
-        withCredentials: true,
+      await axios.delete(URL + "/api/users/" + user._id, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
       });
       setUser(null);
       navigate("/");
-      // console.log(res.data)
     } catch (err) {
       console.log(err);
     }
   };
-  // console.log(user)
+
   const fetchUserPosts = async () => {
     try {
       const res = await axios.get(URL + "/api/posts/user/" + user._id);
-      // console.log(res.data)
       setPosts(res.data);
     } catch (err) {
       console.log(err);
@@ -79,59 +87,65 @@ const Profile = () => {
   }, [param]);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-100">
       <Navbar />
-      <div className="min-h-[80vh] px-8 md:px-[200px] mt-8 flex md:flex-row flex-col-reverse md:items-start items-start">
-        <div className="flex flex-col md:w-[60%] w-full mt-8 md:mt-0">
-          <h1 className="text-xl font-bold mb-4">Your posts:</h1>
-          {posts?.map((p) => (
-            <ProfilePosts key={p._id} p={p} />
-          ))}
-        </div>
-        <div className="md:sticky md:top-12  flex justify-start md:justify-end items-start md:w-[40%] w-full md:items-end ">
-          <div className=" flex flex-col space-y-4 items-start bg-slate-200 p-8 px-14 py-10 shadow-md rounded-md">
-            <h1 className="text-xl font-bold mb-4">Profile</h1>
-            <input
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
-              className="outline-none px-4 py-2 text-gray-500 bg-gray-100 rounded-md hover:shadow-md transition-all duration-300 font-semibold"
-              placeholder="Your username"
-              type="text"
-            />
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              className="outline-none px-4 py-2 text-gray-500 bg-gray-100 rounded-md hover:shadow-md transition-all duration-300 font-semibold"
-              placeholder="Your email"
-              type="email"
-            />
-            <p className="outline-none px-4 py-2 text-gray-500 bg-gray-100 rounded-md hover:shadow-md transition-all duration-300 font-semibold">Views : {view}</p>
-            {/* <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              className="outline-none px-4 py-2 text-gray-500 bg-transparent"
-              placeholder="Your password"
-              type="password"
-            /> */}
-            <div className="flex items-center space-x-4 mt-8">
-              <button
-                onClick={handleUserUpdate}
-                className="text-white font-semibold bg-black px-4 py-2 hover:text-black hover:bg-gray-400 rounded-md"
-              >
-                Update
-              </button>
-              <button
-                onClick={handleUserDelete}
-                className="text-white font-semibold bg-black px-4 py-2 hover:text-black hover:bg-gray-400 rounded-md"
-              >
-                Delete
-              </button>
-            </div>
-            {updated && (
-              <h3 className="text-green-500 text-sm text-center mt-4">
-                user updated successfully!
-              </h3>
+      <div className="px-4 md:px-10 lg:px-20 py-8">
+        <div className="md:flex md:justify-between md:space-x-8">
+          <div className="md:w-2/3 bg-white p-6 rounded-lg shadow-lg">
+            <h1 className="text-2xl font-bold mb-4">Your Posts</h1>
+            {posts.length > 0 ? (
+              posts.map((p) => <ProfilePosts key={p._id} p={p} />)
+            ) : (
+              <p className="text-gray-600">No posts available.</p>
             )}
+          </div>
+          <div className="mt-8 md:mt-0 md:w-1/3">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <h1 className="text-2xl font-bold mb-4">Profile</h1>
+              <input
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+                className="block w-full p-3 mb-4 bg-gray-200 rounded-md border border-gray-300"
+                placeholder="Your username"
+                type="text"
+              />
+              <input
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                className="block w-full p-3 mb-4 bg-gray-200 rounded-md border border-gray-300"
+                placeholder="Your email"
+                type="email"
+              />
+              <p className="mb-4 p-3 bg-gray-200 rounded-md border border-gray-300">
+                Views: {view}
+              </p>
+              {/* <input
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                className="block w-full p-3 mb-4 bg-gray-200 rounded-md border border-gray-300"
+                placeholder="Your password"
+                type="password"
+              /> */}
+              <div className="flex justify-between mt-4">
+                <button
+                  onClick={handleUserUpdate}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={handleUserDelete}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                >
+                  Delete
+                </button>
+              </div>
+              {updated && (
+                <p className="text-green-500 text-sm text-center mt-4">
+                  User updated successfully!
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>

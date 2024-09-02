@@ -38,66 +38,10 @@ const UserProfile = () => {
   }, [id]);
 
   return (
-    // <div>
-    //   <Navbar />
-    //   <div className="min-h-[80vh] px-8 md:px-[200px] mt-8 flex md:flex-row flex-col-reverse md:items-start items-start">
-    //     <div className="flex flex-col md:w-[70%] w-full mt-8 md:mt-0">
-    //       <h1 className="text-xl font-bold mb-4">User's posts:</h1>
-    //       {posts?.map((p) => (
-    //         <ProfilePosts key={p._id} p={p} />
-    //       ))}
-    //     </div>
-    //     <div className="md:sticky md:top-12  flex justify-start md:justify-end items-start md:w-[30%] w-full md:items-end">
-    //       <div className="flex flex-col space-y-4 items-start">
-    //         <h1 className="text-xl font-bold mb-4">Profile</h1>
-    //         <p className="px-4 py-2 text-gray-500">Username: {username}</p>
-    //         <p className="px-4 py-2 text-gray-500">Email: {email}</p>
-    //       </div>
-    //     </div>
-    //       <div className="flex flex-col space-y-4 items-start">
-    //         <h1 className="text-2xl font-bold mb-4 text-gray-800">Profile</h1>
-    //         <div className="bg-gray-100 p-2 rounded-md hover:shadow-md transition-all duration-300">
-    //           <p className="px-4 py-2 text-gray-700">Username: {username}</p>
-    //         </div>
-    //         <div className="bg-gray-100 p-2 rounded-md hover:shadow-md transition-all duration-300">
-    //           <p className="px-4 py-2 text-gray-700">Email: {email}</p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <Footer />
-    // </div>
-
-    // <div>
-    //   <Navbar />
-    //   <div className="min-h-[80vh] px-8 md:px-[200px] mt-8 flex md:flex-row flex-col-reverse md:items-start items-start">
-    //     <div className="flex flex-col md:w-[60%] w-full mt-8 md:mt-0">
-    //       <h1 className="text-3xl font-bold mb-6 text-gray-800">
-    //         User's Posts:
-    //       </h1>
-    //       {posts?.map((p) => (
-    //         <ProfilePosts key={p._id} p={p} />
-    //       ))}
-    //     </div>
-    //     <div className="md:sticky md:top-12 p-4 flex flex-col md:items-end items-start md:w-[40%] w-full transition-all duration-300">
-    //       <div className="flex flex-col space-y-4 items-start">
-    //         <h1 className="text-2xl font-bold mb-4 text-gray-800">Profile</h1>
-    //         <div className="bg-gray-100 p-3 rounded-md hover:shadow-md transition-all duration-300">
-    //           <p className="text-lg text-gray-700">Username: {username}</p>
-    //         </div>
-    //         <div className="bg-gray-100 p-3 rounded-md hover:shadow-md transition-all duration-300">
-    //           <p className="text-lg text-gray-700">Email: {email}</p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-
-    //   <Footer />
-    // </div>
-
     <div>
       <Navbar />
-      <div className="min-h-[80vh] px-8 md:px-[200px] mt-8 flex md:flex-row flex-col-reverse md:items-start items-start">
+      <div className="min-h-[80vh] px-4 md:px-[200px] mt-8 flex md:flex-row flex-col-reverse md:items-start items-start">
+        {/* User Posts Section */}
         <div className="flex flex-col md:w-[60%] w-full mt-8 md:mt-0 mb-14">
           <h1 className="text-3xl font-bold mb-6 text-gray-800">
             User's Posts:
@@ -106,22 +50,24 @@ const UserProfile = () => {
             <ProfilePosts key={p._id} p={p} />
           ))}
         </div>
+
+        {/* Profile Information Section */}
         <div className="md:sticky md:top-12 p-4 flex flex-col md:items-end items-start md:w-[40%] w-full transition-all duration-300">
-          <div className="flex flex-col space-y-4 items-start bg-slate-200 p-8 px-14 py-10 shadow-md rounded-md">
-            <h1 className="flex items-center text-2xl font-bold mb-4 text-gray-800">
-              Profile
+          <div className="flex flex-col space-y-4 items-start bg-white p-6 md:p-8 shadow-lg rounded-md w-full md:w-auto">
+            <div className="flex items-center mb-4">
+              <h1 className="text-2xl font-bold text-gray-800">Profile</h1>
               <img
                 src={profileImg}
-                alt=""
-                className="h-10 w-10 ml-2 object-cover rounded-full"
+                alt="Profile"
+                className="h-12 w-12 ml-3 object-cover rounded-full"
               />
-            </h1>
-            <div className="bg-gray-100 p-3 rounded-md hover:shadow-md transition-all duration-300">
+            </div>
+            <div className="bg-gray-50 p-4 rounded-md w-full hover:shadow-md transition-all duration-300">
               <p className="text-lg text-gray-700 font-semibold">
                 Username: {username}
               </p>
             </div>
-            <div className="bg-gray-100 p-3 rounded-md hover:shadow-md transition-all duration-300">
+            <div className="bg-gray-50 p-4 rounded-md w-full hover:shadow-md transition-all duration-300">
               <p className="text-lg text-gray-700 font-semibold">
                 Email: {email}
               </p>
@@ -129,7 +75,6 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

@@ -19,7 +19,7 @@ const Login = () => {
       // console.log(res.data)
       const { token, info } = res.data;
       localStorage.setItem('token', token); // we are storing token in local storage from the response
-      setUser(res.data)
+      setUser(info)
       navigate("/")
 
     }

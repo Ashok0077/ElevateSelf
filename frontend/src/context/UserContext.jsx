@@ -47,7 +47,8 @@ export function UserContextProvider({children}){
       }
     };
     
-    return (<UserContext.Provider value={{user,setUser,logout}}>
+    //context provider
+    return (<UserContext.Provider value={{user,setUser,logout}}>  
       {children}
     </UserContext.Provider>)
 }

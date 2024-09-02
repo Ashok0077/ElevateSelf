@@ -6,6 +6,7 @@ const Subscribe = () => {
 
   const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,20 +18,21 @@ const Subscribe = () => {
         body: new FormData(form),
       });
 
-      console.log('Success!', response);
+      if (response.ok) {
+        setEmail('');
+        setSuccessMessage('Successfully subscribed!');
+        setErrorMessage('');
+      } else {
+        throw new Error('Form submission failed');
+      }
 
-      // Clear the input field after successful submission
-      setEmail('');
-
-      // Display success message
-      setSuccessMessage('Successfully subscribed!');
-
-      // Hide success message after a few seconds (e.g., 5 seconds)
       setTimeout(() => {
         setSuccessMessage('');
-      }, 5000); // 5000 milliseconds = 5 seconds
+      }, 5000);
     } catch (error) {
       console.error('Error!', error.message);
+      setSuccessMessage('');
+      setErrorMessage('Sorry, due to infrequent use, the collector form is not working.');
     }
   };
 
@@ -56,29 +58,38 @@ const Subscribe = () => {
         <div className="container grid grid-cols-12 mx-auto py-10 md:pb-20 lg:place-items-center">
           <div className="col-span-12 lg:col-span-6">
             <h2 className="text-white font-roboto font-bold text-2xl md:text-4xl md:text-center md:leading-normal lg:text-left">
-            Subscribe to us and receive personalized motivational quotes based on your interests, ensuring that you start each day with the inspiration to make it extraordinary.
+              Subscribe to us and receive personalized motivational quotes based on your interests, ensuring that you start each day with the inspiration to make it extraordinary.
             </h2>
             
-              <form className="w-full max-w-[494px] mt-12 space-y-3 mx-auto md:space-y-0 md:flex md:items-center md:space-x-2 lg:mx-0" onSubmit={handleSubmit}>
-                <input
-                  type="email"
-                  className="px-4 py-3 rounded-lg w-full placeholder:text-dark-light"
-                  name="Email"
-                  placeholder="Your Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <button className="px-4 py-3 rounded-lg w-full bg-[#1565d8] text-white font-bold md:w-fit md:whitespace-nowrap">
-                  Get started
-                </button>
-              </form>
+            <form className="w-full max-w-[494px] mt-12 space-y-3 mx-auto md:space-y-0 md:flex md:items-center md:space-x-2 lg:mx-0" onSubmit={handleSubmit}>
+              <input
+                type="email"
+                className="px-4 py-3 rounded-lg w-full placeholder:text-dark-light"
+                name="Email"
+                placeholder="Your Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <button className="px-4 py-3 rounded-lg w-full bg-[#1565d8] text-white font-bold md:w-fit md:whitespace-nowrap">
+                Get started
+              </button>
+            </form>
+            
+            {/* Display success and error messages below the input field */}
+            <div className="mt-2">
               {successMessage && (
-                <p className="text-green-500 text-sm mt-2">
+                <p className="text-green-500 text-sm">
                   {successMessage}
                 </p>
               )}
+              {errorMessage && (
+                <p className="text-red-500 text-sm">
+                  {errorMessage}
+                </p>
+              )}
+            </div>
             
-            <p className="text-[#B3BAC5]  text-sm leading-7 mt-6 md:text-center md:text-base lg:text-left">
+            <p className="text-[#B3BAC5] text-sm leading-7 mt-6 md:text-center md:text-base lg:text-left">
               <span className="font-bold italic text-[#B3BAC5] md:not-italic md:font-normal md:text-dark-light">
                 Get a response tomorrow
               </span>{" "}
@@ -100,7 +111,7 @@ const Subscribe = () => {
                     Feed of the day
                   </h2>
                   <p className="text-[#5a7184] mt-3 text-sm md:text-lg">
-                  Embrace the journey, ignite your passion, <br/> and let your resilience be the light that guides <br/> you through any darkness.
+                    Embrace the journey, ignite your passion, <br /> and let your resilience be the light that guides <br /> you through any darkness.
                   </p>
                 </div>
               </div>

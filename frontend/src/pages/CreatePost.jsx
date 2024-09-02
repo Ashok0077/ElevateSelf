@@ -6,9 +6,8 @@ import { useContext, useState } from 'react'
 import { UserContext } from '../context/UserContext'
 import { URL } from '../url'
 import axios from 'axios'
-import { Navigate, useNavigate } from 'react-router-dom'
-import Cookies from 'js-cookie';
-import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
+import { useNavigate } from 'react-router-dom'
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import app from '../firebase'
 
 const CreatePost = () => {
@@ -21,6 +20,7 @@ const CreatePost = () => {
   const [cats, setCats] = useState([]);
   const navigate = useNavigate();
   const [imageURL, setImageURL] = useState("");
+  const [uploading, setUploading] = useState(false); // Add uploading state
 
   const deleteCategory = (i) => {
     let updatedCats = [...cats];
@@ -41,29 +41,41 @@ const CreatePost = () => {
 
     // Display the selected image preview
     if (selectedFile) {
-       try {
-      // storing in firebase
-      const storage = getStorage(app);
-      const filename = Date.now() + selectedFile.name;
-      const storageRef = ref(storage,"images/"+filename);
-      await uploadBytes(storageRef,selectedFile);
-      const downloadURL = await getDownloadURL(storageRef);
-      setImageURL(downloadURL);
-      console.log(downloadURL);
+      try {
+        // Start uploading
+        setUploading(true);
+        const storage = getStorage(app);
+        const filename = Date.now() + selectedFile.name;
+        const storageRef = ref(storage, "images/" + filename);
+        
+        // Upload file and track the progress
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
 
-      //for image previewing
-      setImagePreview(downloadURL);
-
-      
-       } catch (error) {
-        console.log(error);
-       }
-
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Progress can be handled here if needed
+          },
+          (error) => {
+            console.error("Upload failed:", error);
+            setUploading(false); // Reset uploading state on error
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(storageRef);
+            setImageURL(downloadURL);
+            setImagePreview(downloadURL);
+            setUploading(false); // Reset uploading state on success
+          }
+        );
+      } catch (error) {
+        console.error(error);
+        setUploading(false); // Reset uploading state on error
+      }
     } else {
       setImagePreview(null);
     }
   }
-  
+
   const handleCreate = async (e) => {
     e.preventDefault();
     const post = {
@@ -71,31 +83,11 @@ const CreatePost = () => {
       desc,
       username: user.username,
       userId: user._id,
-      categories: cats
-    }
-
-    if (file) {
-      // const data = new FormData();
-      // const filename = Date.now() + file.name;
-      // data.append("img", filename);
-      // data.append("file", file);
-      //post.photo = filename;
-
-      post.photo = imageURL;
-
-      // try {
-      //   const imgUpload = await axios.post(URL + "/api/upload", data);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+      categories: cats,
+      photo: imageURL
     }
 
     const token = localStorage.getItem("token");
-    // console.log("token value");
-    // console.log(token);
-
-   
-    console.log(user.username) // for deployment it is important to handle context also
 
     try {
       const res = await axios.post(URL + "/api/posts/create", post, {
@@ -106,7 +98,7 @@ const CreatePost = () => {
       });
       navigate("/posts/post/" + res.data._id);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
@@ -135,13 +127,17 @@ const CreatePost = () => {
               className='hidden'
               onChange={handleFileChange}
             />
-            {/* Display selected image preview */}
-            {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="Selected"
-                className="mt-2 rounded-md max-h-40"
-              />
+            {/* Display uploading message or image preview */}
+            {uploading ? (
+              <p className='text-blue-500 mt-2'>Uploading...</p>
+            ) : (
+              imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Selected"
+                  className="mt-2 rounded-md max-h-40"
+                />
+              )
             )}
           </div>
 
@@ -176,5 +172,4 @@ const CreatePost = () => {
   )
 }
 
-export default CreatePost
-
+export default CreatePost;
